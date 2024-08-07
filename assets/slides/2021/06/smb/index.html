@@ -1,0 +1,345 @@
+---
+layout: slides
+title: "SMB 2021"
+---
+<!-- THE SLIDES -->
+
+<section>
+	<h3>Learning a multifidelity simulation strategy for likelihood-free Bayesian inference</h3>
+	<h4>
+		Thomas Prescott (Alan Turing Institute)<br>
+		Ruth Baker (University of Oxford)
+	</h4>
+	<p>
+		Stochastic Systems Biology: Theory and Simulation<br>
+		SMB 2021, 16 June 2021
+	</p>
+</section>
+
+<section>
+	<h3>Reading</h3>
+	<p>
+		Prescott and Baker.
+		<a href="https://doi.org/10.1137/18M1229742">Multifidelity approximate Bayesian computation.</a>
+		SIAM/ASA Journal of Uncertainty Quantification 8:114 (2020)
+	</p>
+	<p>
+		Prescott and Baker.
+		<a href="https://arxiv.org/abs/2001.06256">Multifidelity approximate Bayesian computation with sequential Monte Carlo parameter sampling.</a>
+		JUQ, in press (2021)
+	</p>
+	<p>
+		See <a href="http://tppres.co.tt">tppres.co.tt</a> for links, including to these slides.
+	</p>
+</section>
+
+<section>
+	<h3>Abstract</h3>
+	<section><ul>
+		<li class="fragment">Simulation-based, likelihood-free Bayesian inference is expensive.</li>
+		<li class="fragment">We can use <em>low-fidelity approximations</em> of high-fidelity models...</li>
+		<li class="fragment">...but this introduces uncontrolled bias.</li>
+	</ul></section>
+	<section><ul>
+		<li>We have removed this bias with a <em>multifidelity</em> approach:
+			<ul>
+				<li class="fragment">Use low-fidelity simulations as much as possible.</li>
+				<li class="fragment">Correct with high-fidelity simulations when appropriate.</li>
+			</ul>
+		</li>
+		<li class="fragment">We can tune multifidelity to maximise its <em>efficiency</em>.</li>
+	</ul></section>
+</section>
+
+<section data-auto-animate>
+	<h3>Bayesian inference</h3>
+	<p>Map prior, $\pi(\theta)$, to posterior, $\pi(\theta~|~x_{\mathrm{obs}})$.</p>
+	<p data-id="Bayes">
+		Bayes' rule: $\pi(\theta~|~ x_{\mathrm{obs}}) \propto L(\theta) \pi(\theta).$
+	</p>
+	<p class="fragment">
+		The <em>likelihood</em> $L(\theta) = f(x_{\mathrm{obs}}~|~\theta)$ often cannot be calculated.
+	</p>
+</section>
+
+<section data-auto-animate>
+	<h3>Likelihood-free Bayes</h3>
+	<p data-id="Bayes">
+		Bayes' rule: $\pi(\theta~|~ x_{\mathrm{obs}}) \propto L(\theta) \pi(\theta)$.
+	</p>
+	<p class="fragment">
+		Approximate $L(\theta) \approx \hat L(\theta)$ with a function that can be calculated,
+		or estimated, based on model simulations:
+		<ul class="fragment">
+			<li class="fragment highlight-green">Approximate Bayesian computation (ABC)</li>
+			<li>Synthetic likelihoods</li>
+			<li>Variational methods</li>
+		</ul>
+	</p>
+</section>
+
+<section data-auto-animate>
+	<h3>ABC likelihood</h3>
+	<p class="fragment">Parametrised model simulations: $y \sim f(\cdot~|~\theta)$.</p>
+	<p class="fragment"><em>Neighbourhood</em> of data: $\Omega = \{ y~:~d(y,x_{\mathrm{obs}})<\epsilon \}$ for some distance, $d$, and threshold, $\epsilon$.</p>
+	<p class="fragment" data-id="L_ABC">Approximate the likelihood: \[ \hat L_{\mathrm{ABC}}(\theta) = \mathbf P(y \in \Omega~|~\theta). \]</p>
+</section>
+
+<section data-auto-animate>
+	<h3>ABC posterior</h3>
+		<p data-id="L_ABC">Approximate the likelihood, \[ \hat L_{\mathrm{ABC}}(\theta) = \mathbf P(y \in \Omega~|~\theta). \]</p>
+		<p class="fragment">This implies an approximate posterior:	\[ \pi_{\mathrm{ABC}}(\theta~|~x_{\mathrm{obs}}) \propto \mathbf P(y \in \Omega~|~\theta) \pi(\theta). \]</p>
+</section>
+
+
+<section>
+	<section>
+		<p>Example: stochastic time, $y$ seconds, for $\theta$ enzyme molecules to convert 100 substrate molecules into product.</p>
+		<p class="fragment" data-fragment-index=2>Observed data, $x_{\mathrm{obs}}=180$ seconds.</p>
+		<div class="r-stack">
+			<span class="fragment fade-in" data-fragment-index=1>
+				<span class="fragment fade-out" data-fragment-index=2>
+					<img src="hi-anim-no-data.gif" height="300">
+				</span>
+			</span>
+			<img class="fragment fade-in" data-fragment-index=2 src="hi-anim-data.gif" height="300">
+		</div>
+	</section>
+	<section>
+		<img src="hi-anim-data.gif" height="300">
+		<img src="hi-anim-ell.gif" height="300">
+	</section>
+</section>
+
+<section>
+	The computational burden of likelihood-free inference is dominated by <em>simulation</em>.
+	<p>Options:
+	<ol>
+		<li class="fragment">Intelligent exploration of parameter space.</li>
+		<li class="fragment">Reduce burden of each simulation.</li>
+	</ol></p>
+	<p class="fragment">These are not mutually exclusive&mdash;see <a href="https://arxiv.org/abs/2001.06256">Prescott and Baker (JUQ 2021)</a>.</p>
+</section>
+
+<section>
+	<h3>Low-fidelity models</h3>
+	<p class="fragment fade-in-then-semi-out">
+		Many fields aim to speed simulation with cheaper, approximate, <em>low-fidelity</em> models.
+	</p>
+	<p class="fragment">
+		Examples include space/time discretisation, model order reduction, timescale separation, early termination, ODE and mean field approximations.
+	</p>
+</section>
+
+<section>
+	<img src="lo-anim-data.gif" height="300">
+	<img src="lo-anim-ell.gif" height="300">
+</section>
+
+<section>
+	<h3>Comparing fidelities</h3>
+	<img src="compare_pi.png" height="400">
+</section>
+
+<section data-transition="fade">
+	<h3>Question</h3>
+	<p>Can we use low-fidelity simulations to calibrate the high-fidelity model?</p>
+</section>
+
+<section data-transition="fade">
+	<h3>Yes, but...</h3>
+	<p class="fragment">... not on their own.</p>
+</section>
+
+<section>
+	<h3>ABC</h3>
+	<p>Weighting function:</p>
+	<p>
+		<span class="r-stack">
+			<a class="fragment fade-in-then-out" data-fragment-index=1>$w(\theta, y) = \mathbf 1(y \in \Omega)$</a>
+			<a class="fragment fade-in" data-fragment-index=2>$w(\theta, \tilde y) = \mathbf 1(\tilde y \in \Omega)$</a>
+		</span>
+	</p>
+	<p>
+		<span class="fragment highlight-current-green" data-fragment-index=1>
+		<span class="fragment highlight-red" data-fragment-index=2>
+			Conditional expectation:
+		</span></span></span></span>
+		<span class="r-stack">
+			<a class="fragment fade-in-then-out" data-fragment-index=1>$\mathbf{P}(y \in \Omega~|~\theta)$</a>
+			<a class="fragment fade-in" data-fragment-index=2>$\mathbf{P}(\tilde y \in \Omega~|~\theta)$</a>
+		</span>
+	</p>
+	<p>
+		<span class="fragment highlight-current-red" data-fragment-index=1>
+		<span class="fragment highlight-green" data-fragment-index=2>
+			Simulation cost:
+		</span></span></span>
+		<span class="r-stack">
+			<a class="fragment fade-in-then-out" data-fragment-index=1>$\mathbf E(T~|~\theta)$</a>
+			<a class="fragment fade-in" data-fragment-index=2>$\mathbf E(\tilde T~|~\theta)$</a>
+		</span>
+	</p>
+</section>
+
+<section data-auto-animate>
+	<h3>Multifidelity ABC</h3>
+	<p>Task: design a cheap, unbiased weight:</p>
+	<p data-id="w_mf">
+		<a>$w_{\mathrm{mf}}(\theta, $</a>
+		<a class="fragment" data-fragment-index=1>$\tilde y,$</a>
+		<a class="fragment" data-fragment-index=2>$y,$</a>
+		<a class="fragment" data-fragment-index=3>$u$</a>
+		<a>$)~= $</a>
+		<br>
+		<a class="fragment" data-fragment-index=1>$\mathbf 1(\tilde y \in \Omega)$</a>
+		<a class="fragment" data-fragment-index=2>$+ \left[ \mathbf 1(y \in \Omega) - \mathbf 1(\tilde y \in \Omega) \right]$</a>
+		<a class="fragment" data-fragment-index=3>$\mathbf 1(u < \alpha)$</a>
+		<a class="fragment" data-fragment-index=4>$\frac{1}{\alpha}$</a>
+	</p>
+	<p>
+		<span class="fragment highlight-current-red" data-fragment-index=1>
+		<span class="fragment highlight-current-green" data-fragment-index=2>
+		<span class="fragment highlight-current-red" data-fragment-index=3>
+		<span class="fragment highlight-green" data-fragment-index=4>
+			Conditional expectation:
+		</span></span></span></span>
+		<span class="r-stack">
+			<a class="fragment fade-in-then-out" data-fragment-index=1>$\mathbf P(\tilde y \in \Omega~|~\theta)$</a>
+			<a class="fragment fade-in-then-out" data-fragment-index=2>$\mathbf P(y \in \Omega~|~\theta)$</a>
+			<a class="fragment fade-in-then-out" data-fragment-index=3>$\alpha \mathbf P(y \in \Omega~|~\theta) + (1-\alpha) \mathbf P(\tilde y \in \Omega~|~\theta)$</a>
+			<a class="fragment fade-in" data-fragment-index=4>$\mathbf P(y \in \Omega~|~\theta)$</a>
+		</span>
+	</p>
+	<p>
+		<span class="fragment highlight-current-green" data-fragment-index=1>
+		<span class="fragment highlight-current-red" data-fragment-index=2>
+		<span class="fragment highlight-green" data-fragment-index=3>
+			Simulation cost:
+		</span></span></span>
+		<span class="r-stack">
+			<a class="fragment fade-in-then-out" data-fragment-index=1>$\mathbf E(\tilde T~|~\theta)$</a>
+			<a class="fragment fade-in-then-out" data-fragment-index=2>$\mathbf E(\tilde T~|~\theta) + \mathbf E(T~|~\theta)$</a>
+			<a class="fragment fade-in-then-out" data-fragment-index=3>$\mathbf E(\tilde T~|~\theta) + \alpha \mathbf E(T~|~\theta)$</a>
+			<a class="fragment fade-in" data-fragment-index=4>$\mathbf E(\tilde T~|~\theta) + \alpha \mathbf E(T~|~\theta)$</a>
+		</span>
+	</p>
+</section>
+<section data-auto-animate>
+	<h3>Multifidelity ABC</h3>
+	<p data-id="w_mf">
+		<a>$w_{\mathrm{mf}}(\theta, \tilde y, y, u) = $</a>
+		<br>
+		<a>$\mathbf 1(\tilde y \in \Omega) + \left[ \mathbf 1(y \in \Omega) - \mathbf 1(\tilde y \in \Omega) \right] \mathbf 1(u < \alpha) \frac{1}{\alpha} $</a>
+	</p>
+	<ul>
+		<li>Given $\theta$,
+		<ul class="fragment">
+			<li>Simulate low-fidelity $\tilde y \sim \tilde f(\cdot~|~\theta)$.</li>
+			<li>Set $w_{\mathrm{mf}} = \mathbf 1(\tilde y \in \Omega)$.</li>
+			<li class="fragment">With probability $\alpha$, <em>correct</em>:
+				<ul class="fragment">
+					<li>Simulate high-fidelity $y \sim f(\cdot~|~\theta)$.</li>
+					<li>Update $w_{\mathrm{mf}} \leftarrow w_{\mathrm{mf}} + (\mathbf 1(y \in \Omega) - w_{\mathrm{mf}})/\alpha$.</li>
+				</ul>
+			</li>
+			<li class="fragment">Return $w_{\mathrm{mf}}$.</li>
+		</ul></li>
+	</ul>
+</section>
+
+<section>
+	<h3>The catch...?</h3>
+	The multifidelity weight, $w_{\mathrm{mf}}(\theta, \tilde y, y, u)$, is:
+	<p><ul>
+		<li>Unbiased: \[\mathbf E(w_{\mathrm{mf}}~|~\theta) = \mathbf P(y \in \Omega~|~\theta). \]</li>
+		<li>Cheap: \[ \mathbf E(T_{\mathrm{mf}}~|~\theta) = \mathbf E(\tilde T~|~\theta) + \alpha \mathbf E(T~|~\theta). \] </li>
+	</ul></p>
+</section>
+
+<section>
+	<h3>The catch!</h3>
+	<section data-auto-animate>
+		<h4>Variance</h4>
+		<p class="fragment">With $\alpha < 1$, any <em>disagreement</em> between the models increases the variance of $w_{\mathrm{mf}}$:</p>
+		<p class="fragment" data-id="variance">
+			\[ \begin{align} \mathrm{Var} (w_{\mathrm{mf}}~|~\theta) &= \mathrm{Var} (w_{ABC}~|~\theta) \\
+			&+ \left(\frac{1}{\alpha} - 1\right) \mathbf P(\mathrm{disagree}~|~\theta) . \end{align} \]
+		</p>
+	</section>
+	<section data-auto-animate>
+		<p data-id="variance">
+			\[ \begin{align} \mathrm{Var} (w_{\mathrm{mf}}~|~\theta) &= \mathrm{Var} (w_{ABC}~|~\theta) \\
+				&+ \left(\frac{1}{\alpha} - 1\right) \mathbf P(\mathrm{disagree}~|~\theta) . \end{align} \]
+		</p>
+		<img src="pairedsims_6.png" height="350">
+	</section>
+</section>
+
+<section data-auto-animate>
+	<h3 data-id="h-tune">Tuning $\alpha$</h3>
+	<p>Decrease $\alpha$ to trade off <em>decreased</em> simulation time,
+		\[ \mathbf E(T_{\mathrm{mf}}~|~\theta) = \mathbf E(\tilde T~|~\theta) + \alpha \mathbf E(T~|~\theta), \]
+		against <em>increased</em> variance,</p>
+		<p data-id="variance">\[ \begin{align} \mathrm{Var} (w_{\mathrm{mf}}~|~\theta) &= \mathrm{Var} (w_{ABC}~|~\theta) \\
+			&+ \left(\frac{1}{\alpha} - 1\right) \mathbf P(\mathrm{disagree}~|~\theta) . \end{align} \]</p>
+</section>
+
+<section data-auto-animate>
+	<h3 data-id="h-tune">Tuning $\alpha$</h3>
+	<span class="r-stack">
+		<img src="compare_pi.png" height="450">
+		<img class="fragment" src="mf_pi6.png" height="450">
+	</span>
+</section>
+
+<section>
+	<h3>Existing results</h3>
+
+	<section>
+		<ul>
+			<li class="fragment fade-in-then-semi-out">
+				Continuous, high(er)-dimensional parameter spaces.
+			</li>
+			<li class="fragment fade-in-then-semi-out">
+				Reducing $\mathbf P(\mathrm{disagree})$ by <em>coupling</em> simulations.
+			</li>
+			<li class="fragment fade-in-then-semi-out">
+				Optimal p.w. constant continuation probabilities:
+				$\alpha(\tilde y) = \eta_1 \mathbf 1(\tilde y \in \Omega) + \eta_2 \mathbf 1(\tilde y \notin \Omega)$.
+			</li>
+			<li class="fragment fade-in-then-semi-out">
+				Exploiting SMC to estimate key quantities required for tuning $\alpha$: simulation times and $\mathbf P(\mathrm{disagree})$.
+			</li>
+			<li class="fragment fade-in-then-semi-out">
+				Dealing with $w_{\mathrm{mf}} < 0$ due to "false positives".
+			</li>
+		</ul>
+	</section>
+	<section>
+		<p>
+			Prescott and Baker.
+			<a href="https://doi.org/10.1137/18M1229742">Multifidelity approximate Bayesian computation.</a>
+			SIAM/ASA Journal of Uncertainty Quantification 8:114 (2020)
+		</p>
+		<p>
+			Prescott and Baker.
+			<a href="https://arxiv.org/abs/2001.06256">Multifidelity approximate Bayesian computation with sequential Monte Carlo parameter sampling.</a>
+			JUQ, in press (2021)
+	</section>
+</section>
+
+<section>
+	<h3>Ongoing/future work</h3>
+	<ul>
+		<li>Tuning general continuation probabilities, $\alpha(\theta, \tilde y)$.</li>
+		<li>Managing multiple low-fidelity models.</li>
+	</ul>
+</section>
+
+<section>
+	<h3>Thank you!</h3>
+	<p>I'm happy to take questions.</p>
+	<a href="https://tppres.co.tt">tppres.co.tt</a><br><a href="https://twitter.com/tpprescott">@tpprescott</a>
+	<p>With thanks to <a href="http://www.iamruthbaker.com">Ruth Baker</a> and UKRI Biotechnology and Biological Sciences Research Council project BB/R000816/1.</p>
+</section>

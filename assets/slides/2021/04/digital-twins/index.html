@@ -1,0 +1,182 @@
+---
+layout: slides
+title: Digital Twins Interview
+#published: false
+---
+
+<section>
+	<h3>
+		Digital Twins of Fleets and Supply Chains
+	</h3>
+	<h4>
+		PDRA Interview
+	</h4>
+	<p>
+		Dr Thomas Prescott<br>
+		Alan Turing Institute,
+		26 April 2021
+	</p>
+</section>
+
+<section>
+	<h3>Research Background and Fit to Role</h3>
+	<ul>
+		<li>DPhil & PDRA I in Engineering Science (2010 - 2016)</li>
+		<li>PDRA II in Applied Mathematics (2018 - Present)</li>
+		<li class="fragment">Operational research in Government (2016 - 2018) and industry (2008-2010)</li>
+	</ul>
+	<p class="fragment">
+		<em>Combined background in systems of systems, inference, and multifidelity simulation.</em>
+	</p>
+</section>
+
+<section>
+		<h3>Layered network decomposition</h3>
+	<section>
+		<h5>Signal propagation</h5>
+		<img src="LayersCausality.png">
+		<p class="fragment">The influence of $k_a$ on $X_4$?</p>
+	</section>
+	<section>
+		<h5>Layers in isolation and in context</h5>
+		<p><ul>
+			<li>System dynamics: \[ \dot x = f(x) = f_1(x) + f_2(x) \]</li>
+			<li>
+				Feedback interconnection of layers introduced by replicating state vector:
+				\begin{align} \dot x_1 &= f_1(x_1+x_2) \\ \dot x_2 &= f_2(x_1+x_2) \end{align}
+			</li>
+		</ul></p>
+	</section>
+	<section>
+		<h5>Example: Biochemical reaction networks</h5>
+		<p><ul>
+			<li>
+				Decomposition into groups of reactions:
+				\[ \dot x = \left[ \begin{matrix} S_1 & S_2 \end{matrix} \right] \left[ \begin{matrix} v_1(x) \\ v_2(x) \end{matrix} \right] \]
+			</li>
+			<li>
+				Feedback interconnection of layers:
+				\begin{align} \dot x_1 &= S_1 v_1(x_1+x_2) \\ \dot x_2 &= S_2 v_2(x_1+x_2) \end{align}
+			</li>
+		</ul></p>
+	</section>
+	<section>
+		<p><ul>
+			<li>Approach is orthogonal to typical <em>modular</em> decompositions.</li>
+			<li>States are untransformed and thus intepretable.</li>
+			<li>Signal propagation is explicit (<em>retroactivity</em>).</li>
+			<li>Parametric perturbations propagate across layers in feedback.</li>
+		</ul></p>
+	</section>
+</section>
+
+<section>
+	<h3>Error guarantees</h3>
+	<section>
+		<h5>Tools from robust control theory</h5>
+		<img src="BlockDiagram.png">
+		<p class="fragment">Emphasis on input/output guarantees</p>
+	</section>
+	<section data-auto-animate>
+		<p>
+			Exact and approximate models:
+			\begin{align}
+				\dot x &= f(x,u) &y = h(x,u) \\
+				\dot{\tilde{x}} &= \tilde f(\tilde x, u) &{\tilde y} = \tilde h(\tilde x, u)
+			\end{align}
+		</p>
+		<p>Error system:
+		<div class="fragment" data-id="Error">
+			\begin{align}
+				\frac{d}{dt} \left[ \begin{matrix} x \\ \tilde x \end{matrix} \right]
+				&= F(x, \tilde x, u) & y_e = h(x, u) - \tilde h(\tilde x, u)
+			\end{align}
+		</div>
+		</p>
+	</section>
+	<section data-auto-animate>
+		<div class="fragment" data-id="Error">
+			\begin{align}
+				\frac{d}{dt} \left[ \begin{matrix} x \\ \tilde x \end{matrix} \right]
+				&= F(x, \tilde x, u) & y_e = h(x, u) - \tilde h(\tilde x, u)
+			\end{align}
+		</div>
+		<div>
+			Can use dissipativity to certify error-system properties;
+			e.g. the error bound \[ \| y_e \|_2^2 \leq \gamma^2 \| u \|_2^2 + V(x_0, \tilde x_0) \]
+		</div>
+		<div class="fragment">
+			 is certified by finding $V(x, \tilde x) > 0$ and $\gamma$ s.t.
+			\[ \nabla V(x, \tilde x) \cdot F(x, \tilde x, u) + |h(x,u)-\tilde h(\tilde x, u)|^2 \leq \gamma^2 |u|^2 \]
+		</div>
+	</section>
+</section>
+
+<section>
+	<h3>Multifidelity likelihood-free inference</h3>
+	<section>
+		<h5>Likelihood-free Bayesian parameter inference</h5>
+		<p><ul>
+			<li>Explicit modelling of complex, stochastic, parametrised dynamical systems mapping parameters to outputs.</li>
+			<li>Can simulate $y \sim f(\cdot~|~\theta)$ but cannot calculate $L(\theta) = f(\mathrm{data}~|~\theta)$.</li>
+		</ul></p>
+	</section>
+	<section>
+		<h5>ABC</h5>
+		<p>
+			For neighbourhood of data, $\Omega$, estimate the likelihood:
+			\[ L_{\mathrm{ABC}}(\theta) = \mathbf 1(y \in \Omega) \]
+			Simulation $y \sim f(\cdot~|~\theta)$ is a bottleneck
+			- to what extent can we use a different, cheaper model?
+		</p>
+	</section>
+	<section>
+		<p>
+			We consider a cheaper surrogate, $\tilde y \sim \tilde f(\cdot~|~\theta)$ and construct:
+			\[ L_{\mathrm{mf}}(\theta) = \mathbf 1(\tilde y \in \Omega) + \frac{\mathbf 1(U \leq \alpha)}{\alpha} \left[ \mathbf 1(y \in \Omega) - \mathbf 1(\tilde y \in \Omega) \right]  \]
+			With probability $1-\alpha$ we do <em>not</em> simulate $y \sim f(\cdot~|~\theta)$.
+		</p>
+	</section>
+</section>
+
+<section>
+	<h3>Agent-based stochastic models of cell motility</h3>
+	<section>
+		<p><ul>
+			<li>Parametrised SDE.</li>
+			<li>Cell velocity evolves as a random walk on parametrised stationary distributions.</li>
+			<li>Electric field induces a new stationary distribution.</li>
+		</ul></p>
+	</section>
+	<section>
+		<img src="Compare_Velocities.svg" height=300>
+	</section>
+	<section>
+		<h5>Quantifying the impact of electric fields on single-cell motility</h5>
+		<p>Paper uses likelihood-free Bayesian inference to identify model parameters from data.</p>
+		<p>We thus identify way(s) in which electric fields lead to observed biases in cell motility.</p>
+	</section>
+</section>
+
+<section>
+	<h3>Operational research in government and industry</h3>
+	<section>
+		<h5>Ability to work in a highly collaborative manner</h5>
+		<h5>Wide engagement across disciplinary boundaries</h5>
+		<h5>Knowledge of UK government and policy landscape</h5>
+	</section>
+</section>
+
+<section>
+	<h3>Recap</h3>
+	<ul>
+		<li>Layered network architectures and feedbacks</li>
+		<li>Robustness through worst-case analysis</li>
+		<li>Multifidelity inference</li>
+		<li>Agent-based stochastic models</li>
+		<li>Operational research in government and industry</li>
+	</ul>
+	<p>
+		<em>Combined background in systems of systems, inference, and multifidelity simulation.</em>
+	</p>
+</section>

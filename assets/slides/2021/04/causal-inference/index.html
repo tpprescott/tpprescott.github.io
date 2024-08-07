@@ -1,0 +1,188 @@
+---
+layout: slides
+title: Causal Inference Interview
+#published: false
+---
+
+<section>
+	<h3>
+		Causal Inference and Causal Modelling in Complex Interconnected Systems
+	</h3>
+	<h4>
+		PDRA Interview
+	</h4>
+	<p>
+		Dr Thomas Prescott<br>
+		Alan Turing Institute,
+		23 April 2021
+	</p>
+</section>
+
+<section>
+	<h3>Research Background and Fit to Role</h3>
+	<ul>
+		<li>DPhil & PDRA I in Engineering Science (2010 - 2016)</li>
+		<li>PDRA II in Applied Mathematics (2018 - Present)</li>
+		<li>Operational Research in Government (2016 - 2018)</li>
+	</ul>
+	<p class="fragment"><em>Opportunity to apply tools from control theory to challenges in causal inference & ML.</em></p>
+</section>
+
+<section>
+	<h3>Layered network decomposition</h3>
+	<section>
+		<h5>Causal modelling of complex interconnected systems</h5>
+		<h5>Dynamics on networks</h5>
+	</section>
+	<section>
+		<h5>Signal propagation</h5>
+		<img src="LayersCausality.png">
+		<p class="fragment">The influence of $k_a$ on $X_4$?</p>
+	</section>
+	<section>
+		<h5>Layers in isolation and in context</h5>
+		<p><ul>
+			<li>System dynamics: \[ \dot x = f(x) = f_1(x) + f_2(x) \]</li>
+			<li>
+				Feedback interconnection of layers introduced by replicating state vector:
+				\begin{align} \dot x_1 &= f_1(x_1+x_2) \\ \dot x_2 &= f_2(x_1+x_2) \end{align}
+			</li>
+		</ul></p>
+	</section>
+	<section>
+		<h5>Example: Biochemical reaction networks</h5>
+		<p><ul>
+			<li>
+				Decomposition into groups of reactions:
+				\[ \dot x = \left[ \begin{matrix} S_1 & S_2 \end{matrix} \right] \left[ \begin{matrix} v_1(x) \\ v_2(x) \end{matrix} \right] \]
+			</li>
+			<li>
+				Feedback interconnection of layers:
+				\begin{align} \dot x_1 &= S_1 v_1(x_1+x_2) \\ \dot x_2 &= S_2 v_2(x_1+x_2) \end{align}
+			</li>
+		</ul></p>
+	</section>
+	<section>
+		<p><ul>
+			<li>Approach is orthogonal to typical <em>modular</em> decompositions.</li>
+			<li>States are untransformed and thus intepretable.</li>
+			<li>Signal propagation is explicit (<em>retroactivity</em>).</li>
+			<li>Parametric perturbations propagate across layers in feedback.</li>
+		</ul></p>
+	</section>
+</section>
+
+<section>
+	<h3>Worst-case guarantees</h3>
+	<section>
+		<h5>Robust machine learning</h5>
+		<h5>Resilience in complex interconnected [socioeconomic] systems</h5>
+	</section>
+	<section>
+		<h5>Tools from robust control theory</h5>
+		<img src="BlockDiagram.png">
+		<p class="fragment">Emphasis on input/output guarantees</p>
+	</section>
+	<section data-auto-animate>
+		<h5>Dissipativity</h5>
+		<p>Dynamics: $\dot x = f(x,u)$ with $y = h(x,u)$.</p>
+		<p>Can we show <em>dissipativity</em> with respect to an input-output relationship, encoded in $r(u,y)$?</p>
+		<div class="fragment" data-id="Dissipativity">
+			There exists $V(x) \geq 0$ such that
+			\[ \dot V + r(u,y) = \nabla V \cdot f(x,u) + r(u,h(x)) \leq 0 \]
+		</div>
+	</section>
+	<section data-auto-animate>
+		<div data-id="Dissipativity">
+			There exists $V(x) \geq 0$ such that
+			\[ \dot V + r(u,y) = \nabla V \cdot f(x,u) + r(u,h(x)) \leq 0 \]
+		</div>
+		<div>
+			Then we have certified a bound on input-output property of block:
+			\[ \int_0^\infty r(u, y) \leq V(x(0)) \]
+			e.g. $\| y \|_2^2 \leq \gamma^2 \| u \|_2^2 + V(x(0))$.
+		</div>
+	</section>
+</section>
+
+<section>
+	<h3>Multifidelity likelihood-free inference</h3>
+	<section>
+		<h5>Incorporating prior knowledge/constraints into learning algorithms</h5>
+		<h5>Interpretable and robust machine learning</h5>
+	</section>
+	<section>
+		<h5>Likelihood-free Bayesian parameter inference</h5>
+		<p><ul>
+			<li>Explicit (causal?) modelling of complex, stochastic, parametrised dynamical systems mapping parameters to outputs.</li>
+			<li>Can simulate $y \sim f(\cdot~|~\theta)$ but cannot calculate $L(\theta) = f(\mathrm{data}~|~\theta)$</li>
+		</ul></p>
+	</section>
+	<section>
+		<h5>ABC</h5>
+		<p>
+			For neighbourhood of data, $\Omega$, estimate the likelihood:
+			\[ L_{\mathrm{hi}}(\theta) = \mathbf 1(y \in \Omega) \]
+			Simulation $y \sim f(\cdot~|~\theta)$ is a bottleneck - to what extent can we use a different, cheaper (causal) model?
+		</p>
+	</section>
+	<section>
+		<p>
+			We consider a cheaper surrogate, $\tilde y \sim \tilde f(\cdot~|~\theta)$ and construct:
+			\[ L_{\mathrm{mf}}(\theta) = \mathbf 1(\tilde y \in \Omega) + \frac{\mathbf 1(U \leq \alpha)}{\alpha} \left[ \mathbf 1(y \in \Omega) - \mathbf 1(\tilde y \in \Omega) \right]  \]
+			With probability $1-\alpha$ we do <em>not</em> simulate $y \sim f(\cdot~|~\theta)$.
+		</p>
+	</section>
+</section>
+
+<section>
+	<h3>Agent-based stochastic models of cell motility</h3>
+	<section>
+		<h5>Modelling complex [socioeconomic/healthcare] processes</h5>
+		<h5>Identification of causal effects from complex multimodal data</h5>
+	</section>
+	<section>
+		<p><ul>
+			<li>Parametrised stochastic model (SDE) of single-cell motility.</li>
+			<li>Cell velocity evolves as a random walk on parametrised stationary distributions.</li>
+			<li>Electric field induces a new stationary distribution.</li>
+		</ul></p>
+	</section>
+	<section>
+		<img src="Compare_Velocities.svg" height=300>
+	</section>
+	<section>
+		<h5>Quantifying the impact of electric fields on single-cell motility</h5>
+		<p>Paper uses likelihood-free Bayesian inference to identify model parameters from data.</p>
+		<p>We thus identify way(s) in which electric fields lead to observed biases in cell motility.</p>
+	</section>
+</section>
+
+<section>
+	<h3>Public policy evaluation</h3>
+	<section>
+		<p>
+			Evaluating the success of transition from tax offices to Government Hubs:
+			<a href="https://www.gov.uk/government/publications/the-magenta-book" target="_blank">The Magenta Book (HMT)</a>
+		</p>
+		<h5>Identification of causal effects from complex multimodal data</h5>
+		<h5>Experience interacting with policymakers</h5>
+		<h5>Knowledge of UK government and policy landscape</h5>
+	</section>
+</section>
+
+<section>
+	<h3>Recap</h3>
+	<ul>
+		<li>Layered network architectures and feedbacks</li>
+		<li>Robustness through worst-case analysis</li>
+		<li>Multifidelity inference</li>
+		<li>Agent-based stochastic models</li>
+		<li>Public policy evaluation in government</li>
+	</ul>
+	<p><em>Opportunity to apply tools from control theory to challenges in causal inference & ML.</em></p>
+
+</section>
+
+</div>
+</div>
