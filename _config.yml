@@ -28,7 +28,7 @@ twitter_username: tpprescott
 github_username:  tpprescott
 
 # Build settings
-remote-theme: no-style-please
+remote-theme: riggraz/no-style-please
 plugins:
   - jekyll-feed
 
