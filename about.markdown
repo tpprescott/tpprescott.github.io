@@ -4,15 +4,35 @@ title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
+## Career History
 
-You can find the source code for Minima at GitHub:
-[jekyll][jekyll-organization] /
-[minima](https://github.com/jekyll/minima)
+### Education
 
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
-[jekyll](https://github.com/jekyll/jekyll)
+- University of Oxford
+  - MMath Mathematics (2004-08)
+  - DPhil Life Sciences Interface / Engineering Science (2010-15)
 
+### Academic research posts
 
-[jekyll-organization]: https://github.com/jekyll
+- PDRA @ Department of Engineering Science, University of Oxford (2015-16)
+- PDRA @ Mathematical Institute, University of Oxford (2018-21)
+- Senior PDRA @ Alan Turing Institute, London (2021-2022)
+
+### Applied research
+
+- Operational researcher @ TUI UK (2008-2010)
+- Operational researcher @ HM Government (2016-2018)
+- Data scientist @ Bentley Systems (2022-23)
+- Data scientist @ Datasparq (2023 - Present)
+
+## Interests and expertise
+
+- Bayesian statistics
+- feedback control and reinforcement learning
+- mathematical modelling
+  - life sciences
+  - social sciences and economics
+  - industrial processes
+- stochastic systems
+- dynamical systems
+- simulation and digital twins
