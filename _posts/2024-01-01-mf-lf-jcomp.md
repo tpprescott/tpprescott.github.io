@@ -1,7 +1,6 @@
 ---
 layout: post
 title:  "Efficient multifidelity likelihood-free Bayesian inference with adaptive computational resource allocation: published!"
-categories: publications
 ---
 
 My collaborative work with [Ruth Baker](https://www.iamruthbaker.com/) and [David Warne](https://twitter.com/davidjwarne)

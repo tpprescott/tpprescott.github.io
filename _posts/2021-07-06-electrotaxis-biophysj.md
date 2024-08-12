@@ -1,7 +1,6 @@
 ---
 layout: post
 title:  "Quantifying the impact of electric fields on single-cell motility: published!"
-categories: publications
 ---
 
 The paper, *Quantifying the impact of electric fields on single-cell motility*,

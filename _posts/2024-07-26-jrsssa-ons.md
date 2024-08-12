@@ -1,7 +1,6 @@
 ---
 layout: post
 title:  "Assessments and developments in constructing a National Health Index for policy-making in the UK: published!"
-categories: publications
 ---
 
 My collaborative work with 
