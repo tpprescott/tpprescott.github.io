@@ -3,17 +3,17 @@
 
 entries:
   - title: about
-    url: about.html
+    url: about
   
   - title: publications
-    url: publications.html
+    url: publications
   
   - title: updates
     post_list:
       limit: 5
       show_more: true
       show_more_text: More...
-      show_more_url: updates.html
+      show_more_url: updates
 
   - title: links
     entries:
