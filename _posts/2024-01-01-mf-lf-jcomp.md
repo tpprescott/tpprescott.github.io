@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Published! Efficient multifidelity likelihood-free Bayesian inference with adaptive computational resource allocation"
+title:  "Efficient multifidelity likelihood-free Bayesian inference with adaptive computational resource allocation: published!"
 categories: publications
 ---
 
