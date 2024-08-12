@@ -4,9 +4,9 @@ title: Publications
 permalink: /publications/
 ---
 
-See also:
-- [Google Scholar](https://scholar.google.com/citations?user=6fh76OQAAAAJ)
-- [ORCiD](https://orcid.org/0000-0002-9884-3887).
+see also:
+- [google scholar](https://scholar.google.com/citations?user=6fh76OQAAAAJ)
+- [orcid](https://orcid.org/0000-0002-9884-3887)
 
 ## Journal papers and preprints
 
