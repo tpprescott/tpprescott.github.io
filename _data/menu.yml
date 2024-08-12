@@ -8,12 +8,12 @@ entries:
   - title: publications
     url: publications.html
   
-  - title: news
+  - title: updates
     post_list:
       limit: 5
       show_more: true
       show_more_text: More...
-      show_more_url: archive.html
+      show_more_url: updates.html
 
   - title: links
     entries:
