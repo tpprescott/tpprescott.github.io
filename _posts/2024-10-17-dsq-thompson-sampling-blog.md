@@ -7,7 +7,7 @@ Collaborating once more with [Jordan Palmer](https://www.linkedin.com/in/jordan-
 
 The post can be found [here](https://www.datasparq.ai/blog/google-ppc-optimisation).
 
-# Google Ads: How to boost your PPC traffic by 15-20% using Thompson sampling
+## Google Ads: How to boost your PPC traffic by 15-20% using Thompson sampling
 
 Are you investing heavily in pay-per-click (PPC) advertising without seeing significant returns? Do you find it challenging to determine the optimal bids for specific keywords? Are you struggling to effectively allocate your budget across various keywords?
 
