@@ -10,12 +10,12 @@ permalink: /about/
 
 - Data scientist @ Datasparq (2023 - Present)
 - Data scientist @ Bentley Systems (2022-23)
-- Operational researcher @ HM Government (2016-2018)
-- Operational researcher @ TUI UK (2008-2010)
+- Operational researcher @ HM Government (2016-18)
+- Operational researcher @ TUI UK (2008-10)
 
 ### Academic research
 
-- Senior PDRA @ Alan Turing Institute, London (2021-2022)
+- Senior PDRA @ Alan Turing Institute, London (2021-22)
 - PDRA @ Mathematical Institute, University of Oxford (2018-21)
 - PDRA @ Department of Engineering Science, University of Oxford (2015-16)
 
