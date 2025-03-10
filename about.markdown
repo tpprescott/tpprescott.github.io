@@ -28,11 +28,11 @@ permalink: /about/
 ## Interests and expertise
 
 - Bayesian statistics
-- feedback control and reinforcement learning
-- mathematical modelling
-  - life sciences
-  - social sciences and economics
-  - industrial processes
-- stochastic systems
-- dynamical systems
-- simulation and digital twins
+- Feedback control and reinforcement learning
+- Mathematical modelling
+  - Life sciences
+  - Social sciences and economics
+  - Industrial processes
+- Stochastic systems
+- Dynamical systems
+- Simulation and digital twins
